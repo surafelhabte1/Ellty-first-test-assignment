@@ -8,6 +8,7 @@ export interface ItemProps {
 const Item = ({ title }: ItemProps) => {
   const [isHover, setIsHover] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   const handleMouseEnter = () => {
     setIsHover(true);
@@ -19,6 +20,10 @@ const Item = ({ title }: ItemProps) => {
 
   const handleClick = () => {
     setIsChecked(!isChecked);
+  };
+
+  const handleMousePressing = (value: boolean) => {
+    setIsClicked(value);
   };
 
   const containerStyle = {
@@ -43,6 +48,12 @@ const Item = ({ title }: ItemProps) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
+      onMouseDown={() => {
+        handleMousePressing(true);
+      }}
+      onMouseUp={() => {
+        handleMousePressing(false);
+      }}
     >
       <span
         style={{
@@ -55,7 +66,11 @@ const Item = ({ title }: ItemProps) => {
         {title}
       </span>
       <span>
-        <Checkbox isHover={isHover} isChecked={isChecked} />
+        <Checkbox
+          isHover={isHover}
+          isChecked={isChecked}
+          isClicked={isClicked}
+        />
       </span>
     </div>
   );

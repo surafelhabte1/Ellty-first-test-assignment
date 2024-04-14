@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 
-const Checkbox = ({ isHover: propIsHover = false, isChecked: propIsChecked = false }) => {
+const Checkbox = ({
+  isHover: propIsHover = false,
+  isChecked: propIsChecked = false,
+  isClicked: propIsClicked = false,
+}) => {
   const [isHover, setIsHover] = useState(propIsHover);
   const [isChecked, setIsChecked] = useState(propIsChecked);
+  const [isClicked, setIsClicked] = useState(propIsClicked);
 
   useEffect(() => {
     setIsHover(propIsHover);
     setIsChecked(propIsChecked);
-  }, [propIsHover, propIsChecked]);
+    setIsClicked(propIsClicked);
+  }, [propIsHover, propIsChecked, propIsClicked]);
 
   const handleMouseEnter = () => {
     setIsHover(true);
@@ -22,6 +28,10 @@ const Checkbox = ({ isHover: propIsHover = false, isChecked: propIsChecked = fal
     setIsChecked(!isChecked);
   };
 
+  const handleMousePressing = (value: boolean) => {
+    setIsClicked(value);
+  };
+
   const checkboxStyle = {
     width: 25,
     height: 25,
@@ -29,7 +39,11 @@ const Checkbox = ({ isHover: propIsHover = false, isChecked: propIsChecked = fal
     borderColor: "#BDBDBD",
     borderWidth: 1,
     borderStyle: isChecked ? "none" : "solid",
-    backgroundColor: isChecked ? (isHover ? "#5087F8" : "#2469F6") : "transparent",
+    backgroundColor: isChecked
+      ? isHover
+        ? "#5087F8"
+        : "#2469F6"
+      : "transparent",
     cursor: isHover ? "pointer" : "default",
     display: "flex",
     justifyContent: "center",
@@ -37,13 +51,20 @@ const Checkbox = ({ isHover: propIsHover = false, isChecked: propIsChecked = fal
     marginLeft: 50,
   };
 
-  const iconColor = isChecked ? "#FFFFFF" : (isHover ? "#878787" : "transparent");
+  const iconColor = isChecked ? "#FFFFFF" : isHover ? "#878787" : "transparent";
 
   return (
     <div
       style={checkboxStyle}
+      className={isClicked ? "checkboxContainer" : ""}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onMouseDown={() => {
+        handleMousePressing(true);
+      }}
+      onMouseUp={() => {
+        handleMousePressing(false);
+      }}
       onClick={handleClick}
     >
       <Icon

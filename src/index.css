@@ -21,9 +21,14 @@
   box-shadow: 0px 8px 15px 0px #1414141f;
   background-color: "#FFFFFF";
   width: 370px;
+  height: 326px;
   border-radius: 6px;
   border-width: 1px;
   border-style: "solid";
   border-color: "#EEEEEE";
   padding: 10px;
+}
+
+.checkboxContainer {
+  box-shadow: 0px 0px 8px 1px skyblue;
 }
